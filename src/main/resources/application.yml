@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: yourmus1c-server
+
+jwt:
+  secret-key: ${SECRET_KEY}
+  access-token-expire-time: 300     # 5??
+  refresh-token-expire-time: 7200   # 2???

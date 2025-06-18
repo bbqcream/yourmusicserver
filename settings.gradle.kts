@@ -1,1 +1,1 @@
-rootProject.name = "YOURMUS1C-SERVER"
+rootProject.name = "yourmusicserver"

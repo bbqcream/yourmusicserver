@@ -21,6 +21,5 @@ class AuthController (
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
     fun login(@RequestBody request: LoginRequestDTO) {
-
     }
 }

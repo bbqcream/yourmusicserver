@@ -25,6 +25,8 @@ repositories {
 }
 
 dependencies {
+    implementation("mysql:mysql-connector-java:8.0.33")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
     runtimeOnly("mysql:mysql-connector-java:8.0.33")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-web")

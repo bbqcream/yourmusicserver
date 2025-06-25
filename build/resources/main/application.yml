@@ -2,25 +2,25 @@ spring:
   application:
     name: yourmusicserver
 
+    jpa:
+      database-platform: org.hibernate.dialect.MySQLDialect
+      open-in-view: false
+      show-sql: true
+      hibernate:
+        ddl-auto: update
+
   datasource:
     url: jdbc:mysql://dgsw29ui-MacBookAir.local:3306/yourmusicdb
     username: root
     password: han1210@@
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
   api-docs:
     path: /v3/api-docs
-    
-  jpa:
-    database-platform: org.hibernate.dialect.MySQLDialect
-    open-in-view: false
-    show-sql: true
-    hibernate:
-      ddl-auto: update
+
 
 jwt:
   secret-key: ${SECRET_KEY}

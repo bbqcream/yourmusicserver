@@ -6,23 +6,38 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
+import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.authority.SimpleGrantedAuthority
+import org.springframework.security.core.userdetails.UserDetails
 
-@Entity // 엔티티 선언하는 코드
-@Table(name = "users") // 테이블 정하기
-data class User(
+@Entity
+@Table(name = "USERS")
+class User(
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // 키 정하기
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
 
-    @Column(nullable = false, unique = true) // 일반 요소인 거 같음, 같은 이메일로 회원가입할 수 없음
-    val email: String,
+    @Column(nullable = false, unique = true)
+    val userUsername: String,
 
     @Column(nullable = false, unique = true)
+    val email: String,
+
+    @Column(nullable = false)
     val name: String,
 
-    @Column (nullable = false, unique = true)
-    val username: String,
+    @Column(nullable = false)
+    val userPassword: String
+) : UserDetails {
 
-    @Column(nullable = false, unique = false)
-    val password: String,
-)
+    override fun getUsername(): String = userUsername
+    override fun getPassword(): String = userPassword
+
+    override fun getAuthorities(): Collection<GrantedAuthority> =
+        listOf(SimpleGrantedAuthority("ROLE_USER"))
+
+    override fun isAccountNonExpired(): Boolean = true
+    override fun isAccountNonLocked(): Boolean = true
+    override fun isCredentialsNonExpired(): Boolean = true
+    override fun isEnabled(): Boolean = true
+}

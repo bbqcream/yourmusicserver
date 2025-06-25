@@ -17,14 +17,13 @@ class SecurityConfig {
         http
             .csrf { it.disable() } // CSRF 비활성화
             .authorizeHttpRequests {
-
                 it.requestMatchers(
                     "/swagger-ui/**",
                     "/v3/api-docs/**",
                     "/swagger-resources/**",
                     "/webjars/**",
                     // 추가 내용
-                    "/auth/signup",
+                    "/auth/register",
                     "/auth/login",
                 ).permitAll()
                     .anyRequest().authenticated()

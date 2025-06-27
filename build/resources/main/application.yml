@@ -9,6 +9,11 @@ spring:
       hibernate:
         ddl-auto: update
 
+    logging:
+      level:
+        org.springframework.security: DEBUG
+
+
   datasource:
     url: jdbc:mysql://dgsw29ui-MacBookAir.local:3306/yourmusicdb
     username: root
@@ -23,9 +28,10 @@ springdoc:
 
 
 jwt:
-  secret-key: ${SECRET_KEY}
+  secret: SuperSecret
   access-token-expire-time: 300
   refresh-token-expire-time: 7200
+
 
 server:
   port: 9090

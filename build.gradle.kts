@@ -25,24 +25,35 @@ repositories {
 }
 
 dependencies {
-    implementation("mysql:mysql-connector-java:8.0.33")
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
-    runtimeOnly("mysql:mysql-connector-java:8.0.33")
+    // ✅ JWT (0.11.x 최신 방식)
+    implementation("io.jsonwebtoken:jjwt-api:0.11.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
+
+    // ✅ Spring Boot
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-security")
+
+    // ✅ DB
+    runtimeOnly("com.mysql:mysql-connector-j")
+
+    // ✅ 기타
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
+
+    // ✅ 테스트
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-    runtimeOnly("com.mysql:mysql-connector-j")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    // ✅ Swagger
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.9")
-    implementation("org.springframework.boot:spring-boot-starter-security")
-    implementation("io.jsonwebtoken:jjwt:0.9.1")
 }
+
 
 kotlin {
     compilerOptions {

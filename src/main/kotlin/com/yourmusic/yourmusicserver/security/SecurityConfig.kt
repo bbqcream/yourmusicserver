@@ -8,7 +8,7 @@ import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer
-import org.springframework.security.crypto.factory.PasswordEncoderFactories
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 
@@ -18,7 +18,7 @@ import org.springframework.security.web.SecurityFilterChain
 class SecurityConfig {
     @Bean
     fun passwordEncoder(): PasswordEncoder { // 패스워드 암호화?
-        return  PasswordEncoderFactories.createDelegatingPasswordEncoder()
+        return BCryptPasswordEncoder()
     }
 
     @Bean
@@ -34,17 +34,6 @@ class SecurityConfig {
     }
 
 
-    class CustomSecurityFilterManager :
-        AbstractHttpConfigurer<CustomSecurityFilterManager, HttpSecurity>() {
-
-        override fun configure(http: HttpSecurity) {
-            val authenticationManager = http.getSharedObject(AuthenticationManager::class.java)
-            http.addFilter(JwtAuthenticationFilter(authenticationManager))
-            super.configure(http)
-        }
-    }
-
-
     /*
  * HTTP에 대해서 '인증'과 '인가'를 담당하는 메서드
  * 필터를 통해 인증 방식과 인증 절차에 대해서 등록하며 설정을 담당하는 메서드
@@ -52,9 +41,29 @@ class SecurityConfig {
     // 인증은 누구인지, 인가는 들어올 수 있는지
 
     @Bean
-    fun SecurityFilterChain(http: HttpSecurity): SecurityFilterChain {
+    fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http
             .csrf { it.disable() }
-            .headers { it.frameOptions { options -> options.disable() } }
+            .httpBasic { it.disable() }
+            .formLogin { it.disable() }
+
+            .authorizeHttpRequests {
+                it
+                    .requestMatchers("/auth/login", "/auth/register").permitAll()
+                    .requestMatchers("/admin/**").hasRole("ADMIN") // 내부적으로 "ROLE_ADMIN"
+                    .anyRequest().permitAll()
+            }
+
+
+            .logout {
+                it
+                    .logoutUrl("/logout")
+                    .logoutSuccessHandler { request, response, authentication ->
+                        response.sendRedirect("/")
+                    }
+                    .deleteCookies("jwtToken")
+            }
+
+        return http.build()
     }
 }

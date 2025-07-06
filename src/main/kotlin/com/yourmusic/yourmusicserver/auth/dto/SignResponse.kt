@@ -7,8 +7,6 @@ import lombok.Builder
 import lombok.Getter
 import lombok.NoArgsConstructor
 
-@Getter
-@Builder @AllArgsConstructor @NoArgsConstructor
 data class SignResponse(
     var id: Long? = null,
     var account: String? = null,

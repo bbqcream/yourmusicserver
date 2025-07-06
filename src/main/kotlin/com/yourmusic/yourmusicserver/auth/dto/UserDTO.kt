@@ -9,7 +9,7 @@ import lombok.Setter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-data class MemberDTO (
+data class UserDTO (
     val email: String,
     val password: String,
     val name: String,
